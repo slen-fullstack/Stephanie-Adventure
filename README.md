@@ -2,7 +2,7 @@
 
 Your personal travel site, built with [Hugo](https://gohugo.io/). Warm sand, coral, sunshine and seafoam ("Sandy Toes"), with round cute fonts.
 
-- **My map** (the home page): tap any country, province, state or capital to mark it as somewhere you've been. It turns coral and the counters update.
+- **My map** (the home page): tap any country, province, state or capital to mark it as somewhere you've been. Zoom into Canada to tap its 5,000+ cities, towns and areas. It turns coral and the counters update.
 - **My plans**: one page per country, with the places you want to see sorted into Food, Adventure, Nature and Attraction. Each place has a photo or emoji, why you want to go, and a cost.
 - **My trips**: a journal for each trip, with where you went, your favourite foods and places, and your photos.
 
@@ -34,6 +34,7 @@ You can also edit at https://app.pagescms.org (sign in with GitHub and pick this
 | Trips (one file per trip) | `content/trips/*.md` |
 | Places you've been on the map | `data/visited.json` |
 | Map shapes and capitals ([Natural Earth](https://www.naturalearthdata.com/), public domain) | `static/map/` |
+| Canadian city and town areas (2021 census subdivisions, [Statistics Canada](https://www150.statcan.gc.ca/n1/pub/92-162-g/92-162-g2022001-eng.htm), Open Government Licence – Canada) | `static/map/canada-cities.json` |
 | Photos | `static/images/` |
 | Styles | `assets/css/main.css` |
 | Map code | `assets/js/map.js` |

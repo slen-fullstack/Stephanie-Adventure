@@ -129,3 +129,14 @@ collections:
               - { name: country, label: Country, widget: string }
               - { name: id, label: Map code, widget: string }
               - { name: c, label: Country code, widget: string }
+          - name: cities
+            label: Canadian cities and towns
+            widget: list
+            required: false
+            summary: "{{name}}, {{province}}"
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: province, label: Province, widget: string }
+              - { name: country, label: Country, widget: string }
+              - { name: id, label: Map code, widget: string }
+              - { name: c, label: Country code, widget: string }

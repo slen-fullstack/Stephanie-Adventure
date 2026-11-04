@@ -14,8 +14,10 @@
   --map-land: #FFE9CF;
   --map-edge: #E9C9A3;
   --map-border: #D3AE84;
-  --map-gold: #FF9C84;
-  --map-gold-edge: #E9765E;
+  --map-gold: #FFC4B4;
+  --map-gold-edge: #F09A84;
+  --map-city: #FF7A5E;
+  --map-city-edge: #C9533C;
   --c-food: #FFE1D8;
   --c-adventure: #D9F2EE;
   --c-nature: #E6F4D7;
@@ -27,7 +29,7 @@
   :root:not([data-theme="light"]) {
     --bg: #2A1F1B; --paper: #362823; --ink: #FBEADF; --ink-soft: #CDAE9F; --coral: #FF9A85; --coral-ink: #FFB09E;
     --sun: #E9B85A; --sea: #5FB3A8; --line: #4A3730; --shadow: rgba(0, 0, 0, .35);
-    --map-sea: #24423F; --map-land: #4A3A31; --map-edge: #5E4A3E; --map-border: #7D6352; --map-gold: #F08A72; --map-gold-edge: #FFB4A2;
+    --map-sea: #24423F; --map-land: #4A3A31; --map-edge: #5E4A3E; --map-border: #7D6352; --map-gold: #8A4E40; --map-gold-edge: #B8705E; --map-city: #FF8A6E; --map-city-edge: #FFC2B2;
     --c-food: #5A3A33; --c-adventure: #27484A; --c-nature: #34472C; --c-attraction: #54472A;
     color-scheme: dark;
   }
@@ -35,7 +37,7 @@
 :root[data-theme="dark"] {
   --bg: #2A1F1B; --paper: #362823; --ink: #FBEADF; --ink-soft: #CDAE9F; --coral: #FF9A85; --coral-ink: #FFB09E;
   --sun: #E9B85A; --sea: #5FB3A8; --line: #4A3730; --shadow: rgba(0, 0, 0, .35);
-  --map-sea: #24423F; --map-land: #4A3A31; --map-edge: #5E4A3E; --map-border: #7D6352; --map-gold: #F08A72; --map-gold-edge: #FFB4A2;
+  --map-sea: #24423F; --map-land: #4A3A31; --map-edge: #5E4A3E; --map-border: #7D6352; --map-gold: #8A4E40; --map-gold-edge: #B8705E; --map-city: #FF8A6E; --map-city-edge: #FFC2B2;
   --c-food: #5A3A33; --c-adventure: #27484A; --c-nature: #34472C; --c-attraction: #54472A;
   color-scheme: dark;
 }
@@ -142,6 +144,7 @@ a.card:hover { transform: translateY(-3px); }
 .sw { display: inline-block; width: 16px; height: 16px; border-radius: 6px; border: 2px solid var(--map-edge); }
 .sw-land { background: var(--map-land); }
 .sw-gold { background: var(--map-gold); border-color: var(--map-gold-edge); }
+.sw-city { background: var(--map-city); border-color: var(--map-city-edge); }
 .sw-star { width: 18px; height: 18px; }
 .map-box { position: relative; }
 .map { height: min(70vh, 600px); min-height: 380px; border-radius: 32px; overflow: hidden; border: 5px solid var(--paper); box-shadow: 0 0 0 3px var(--line), 0 12px 30px var(--shadow); background: var(--map-sea); }
@@ -172,6 +175,9 @@ a.card:hover { transform: translateY(-3px); }
 .been-country h3 { margin-bottom: 8px; }
 .been-country .chip.is-on { background: var(--c-food); border-color: transparent; }
 .chip-cap { background: var(--c-attraction); border-color: transparent; }
+.chip-city { background: var(--c-adventure); border-color: transparent; }
+.been-cities { margin-top: 4px; }
+.been-cities .sub { display: inline-block; margin-bottom: 6px; }
 
 .token-dialog { border: 3px solid var(--line); border-radius: 26px; padding: 22px; max-width: 420px; width: calc(100% - 32px); background: var(--paper); color: var(--ink); box-shadow: 0 20px 60px rgba(0, 0, 0, .25); }
 .token-dialog::backdrop { background: rgba(60, 35, 25, .4); }

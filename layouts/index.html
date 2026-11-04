@@ -7,6 +7,7 @@
   <dl class="stats">
     <div><dd data-stat="countries">0</dd><dt>countries</dt></div>
     <div><dd data-stat="regions">0</dd><dt>provinces &amp; states</dt></div>
+    <div><dd data-stat="cities">0</dd><dt>cities &amp; towns</dt></div>
     <div><dd data-stat="capitals">0</dd><dt>capitals</dt></div>
     <div><dd data-stat="percent">0%</dd><dt>of the world</dt></div>
   </dl>
@@ -14,8 +15,8 @@
 
 <section class="wrap map-wrap">
   <div class="map-tools">
-    <label class="search"><span class="sr">Find a place</span><input id="map-search" type="search" placeholder="Find a country, province, state or capital…" autocomplete="off" list="map-search-list"><datalist id="map-search-list"></datalist></label>
-    <div class="legend"><span><i class="sw sw-land"></i> Not yet</span><span><i class="sw sw-gold"></i> Been there</span><span><svg viewBox="0 0 100 100" class="sw-star"><use href="#spark"/></svg> Capital</span></div>
+    <label class="search"><span class="sr">Find a place</span><input id="map-search" type="search" placeholder="Find a country, province, state, capital or Canadian city…" autocomplete="off" list="map-search-list"><datalist id="map-search-list"></datalist></label>
+    <div class="legend"><span><i class="sw sw-land"></i> Not yet</span><span><i class="sw sw-gold"></i> Province or state</span><span><i class="sw sw-city"></i> City or town</span><span><svg viewBox="0 0 100 100" class="sw-star"><use href="#spark"/></svg> Capital</span></div>
   </div>
   <div class="save-bar" id="save-bar" hidden>
     <p><strong>You have changes on this device.</strong> Save them to your site so they show up everywhere.</p>
@@ -23,7 +24,7 @@
     <p class="save-msg" id="save-msg" role="status"></p>
   </div>
   <div class="map-box">
-  <div id="map" class="map" data-regions="{{ "map/regions.json" | relURL }}" data-countries="{{ "map/countries.json" | relURL }}" data-capitals="{{ "map/capitals.json" | relURL }}" data-repo="{{ site.Params.githubRepo }}"><p class="map-loading">Loading your world…</p></div>
+  <div id="map" class="map" data-regions="{{ "map/regions.json" | relURL }}" data-countries="{{ "map/countries.json" | relURL }}" data-capitals="{{ "map/capitals.json" | relURL }}" data-cities="{{ "map/canada-cities.json" | relURL }}" data-repo="{{ site.Params.githubRepo }}"><p class="map-loading">Loading your world…</p></div>
     <div class="place-panel" id="place-panel" hidden>
       <button class="x" data-close aria-label="Close">×</button>
       <p class="card-kicker" data-kicker></p>
@@ -31,7 +32,7 @@
       <div class="panel-actions"></div>
     </div>
   </div>
-  <p class="hint">Tap a place you've been and it turns coral 🧡 Zoom in to see province and state capitals.</p>
+  <p class="hint">Tap a place you've been and it turns coral 🧡 Zoom into Canada to tap cities and towns.</p>
 
 </section>
 
