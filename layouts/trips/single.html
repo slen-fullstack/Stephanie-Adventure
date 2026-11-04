@@ -1,0 +1,45 @@
+{{ define "main" }}
+{{ $edit := "admin/" | relURL }}
+<section class="trip-hero">
+  {{ with .Params.cover }}<div class="trip-cover">{{ partial "img.html" (dict "src" . "alt" "") }}</div>{{ end }}
+  <div class="wrap page-head">
+    <a class="back" href="{{ "trips/" | relURL }}">← My trips</a>
+    <p class="card-kicker">{{ with .Params.flag }}{{ . }} {{ end }}{{ .Params.country }}{{ if not .Date.IsZero }} · {{ .Date.Format "January 2006" }}{{ with .Params.endDate }} to {{ (time .).Format "January 2006" }}{{ end }}{{ end }}</p>
+    <h1>{{ with .Params.emoji }}<span aria-hidden="true">{{ . }}</span> {{ end }}{{ .Title }}</h1>
+    {{ with .Params.summary }}<p class="lede">{{ . }}</p>{{ end }}
+  </div>
+</section>
+
+<section class="wrap trip-section">
+  <div class="row-head"><h2>📍 Where I went</h2></div>
+  {{ with .Params.places }}
+  <div class="grid">{{ range . }}
+    <article class="card place">
+      <div class="card-art">{{ with .image }}{{ partial "img.html" (dict "src" . "alt" "") }}{{ else }}<span aria-hidden="true">{{ .emoji | default "📍" }}</span>{{ end }}</div>
+      <div class="card-body">{{ if .favourite }}<span class="badge fav">★ Favourite</span>{{ end }}<h3>{{ .name }}</h3>{{ with .note }}<p>{{ . }}</p>{{ end }}</div>
+    </article>{{ end }}
+  </div>
+  {{ else }}<p class="empty">No places logged yet. Add the spots you went to in <a href="{{ $edit }}">✎ Edit my site</a>, and star your favourites.</p>{{ end }}
+</section>
+
+<section class="wrap trip-section">
+  <div class="row-head"><h2>🍽️ My favourite foods</h2></div>
+  {{ with .Params.foods }}
+  <div class="grid">{{ range . }}
+    <article class="card place">
+      <div class="card-art">{{ with .image }}{{ partial "img.html" (dict "src" . "alt" "") }}{{ else }}<span aria-hidden="true">{{ .emoji | default "🍽️" }}</span>{{ end }}</div>
+      <div class="card-body">{{ with .where }}<p class="card-kicker">{{ . }}</p>{{ end }}<h3>{{ .name }}</h3>{{ with .note }}<p>{{ . }}</p>{{ end }}</div>
+    </article>{{ end }}
+  </div>
+  {{ else }}<p class="empty">No foods yet. What did you love eating here?</p>{{ end }}
+</section>
+
+<section class="wrap trip-section">
+  <div class="row-head"><h2>📸 Photos</h2></div>
+  {{ with .Params.photos }}
+  <div class="gallery">{{ range . }}<figure>{{ partial "img.html" (dict "src" .image "alt" (.caption | default "")) }}{{ with .caption }}<figcaption>{{ . }}</figcaption>{{ end }}</figure>{{ end }}</div>
+  {{ else }}<p class="empty">No photos yet. Upload some in <a href="{{ $edit }}">✎ Edit my site</a>.</p>{{ end }}
+</section>
+
+{{ with .Content }}<section class="wrap trip-section"><div class="prose notes"><h2>My story</h2>{{ . }}</div></section>{{ end }}
+{{ end }}

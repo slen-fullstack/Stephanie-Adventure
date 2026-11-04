@@ -1,0 +1,11 @@
+{{ $places := .Params.places | default slice }}
+{{ $total := 0 }}{{ range $places }}{{ $total = add $total (float (.cost | default 0)) }}{{ end }}
+<a class="card plan-card" href="{{ .RelPermalink }}">
+  <div class="card-art">{{ with .Params.cover }}{{ partial "img.html" (dict "src" . "alt" "") }}{{ else }}<span aria-hidden="true">{{ .Params.flag | default "🌍" }}</span>{{ end }}</div>
+  <div class="card-body">
+    <p class="card-kicker">{{ len $places }} {{ cond (eq (len $places) 1) "place" "places" }} · about {{ partial "money.html" $total }}</p>
+    <h3>{{ .Title }}</h3>
+    <p class="cat-dots">{{ range $c := slice "Food" "Adventure" "Nature" "Attraction" }}{{ $n := len (where $places "category" $c) }}{{ if $n }}<span class="chip chip-{{ lower $c }}">{{ partial "cat-emoji.html" $c }} {{ $n }}</span>{{ end }}{{ end }}</p>
+    {{ if .Params.example }}<span class="badge">Example</span>{{ end }}
+  </div>
+</a>

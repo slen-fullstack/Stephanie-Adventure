@@ -1,0 +1,33 @@
+baseURL = "https://slen-fullstack.github.io/stephanie-adventure/"
+locale = "en-us"
+title = "Stephanie Adventure"
+disableKinds = ["taxonomy", "term"]
+
+[params]
+  tagline = "Every place you've been, and every place you're going next."
+  description = "Stephanie's travel world: a map of everywhere you've been, plans by country and a journal of past trips."
+  # Your GitHub repo. The map's "Save to my site" button writes here.
+  githubRepo = "slen-fullstack/stephanie-adventure"
+  # Currency for the cost totals in your plans.
+  currency = "CAD"
+
+[menus]
+  [[menus.main]]
+    name = "Home"
+    pageRef = "/"
+    weight = 10
+  [[menus.main]]
+    name = "My map"
+    pageRef = "/map"
+    weight = 20
+  [[menus.main]]
+    name = "My plans"
+    pageRef = "/plans"
+    weight = 30
+  [[menus.main]]
+    name = "My trips"
+    pageRef = "/trips"
+    weight = 40
+
+[markup.goldmark.renderer]
+  unsafe = true

@@ -1,0 +1,55 @@
+{{ define "main" }}
+{{ $v := site.Data.visited }}
+{{ $cs := slice }}{{ range $v.regions }}{{ $cs = $cs | append .c }}{{ end }}{{ range $v.capitals }}{{ $cs = $cs | append .c }}{{ end }}
+{{ $plans := where site.RegularPages "Section" "plans" }}
+{{ $trips := where site.RegularPages "Section" "trips" }}
+<section class="hero">
+  <div class="hero-photo" style="background-image:url('{{ "images/hero-wave.webp" | relURL }}')" aria-hidden="true"></div>
+  {{ partial "ribbon.html" (dict "class" "hero-ribbon") }}
+  <div class="wrap hero-inner">
+    <p class="hand">Welcome back, Stephanie</p>
+    <h1>Your world, one wave at a time</h1>
+    <p class="lede">{{ site.Params.tagline }}</p>
+    <dl class="stats" data-stats>
+      <div><dt>Countries</dt><dd data-stat="countries">{{ len (uniq $cs) }}</dd></div>
+      <div><dt>Provinces &amp; states</dt><dd data-stat="regions">{{ len $v.regions }}</dd></div>
+      <div><dt>Capitals</dt><dd data-stat="capitals">{{ len $v.capitals }}</dd></div>
+      <div><dt>Trips logged</dt><dd>{{ len $trips }}</dd></div>
+    </dl>
+  </div>
+</section>
+
+<section class="wrap doors">
+  <a class="door" href="{{ "map/" | relURL }}">
+    <span class="door-emoji" aria-hidden="true">🗺️</span>
+    <h2>My map</h2>
+    <p>Tap the countries, provinces, states and capitals you've been to and watch your world turn gold.</p>
+    <span class="door-go">Open my map →</span>
+  </a>
+  <a class="door" href="{{ "plans/" | relURL }}">
+    <span class="door-emoji" aria-hidden="true">🧭</span>
+    <h2>My plans</h2>
+    <p>{{ len $plans }} {{ cond (eq (len $plans) 1) "country" "countries" }} on your list. Food, adventure, nature and attractions, with costs.</p>
+    <span class="door-go">See my plans →</span>
+  </a>
+  <a class="door" href="{{ "trips/" | relURL }}">
+    <span class="door-emoji" aria-hidden="true">📸</span>
+    <h2>My trips</h2>
+    <p>Where you went, your favourite foods and places, and your photos.</p>
+    <span class="door-go">Open my journal →</span>
+  </a>
+</section>
+
+{{ with $trips }}
+<section class="wrap home-row">
+  <div class="row-head"><h2>Recent trips</h2><a href="{{ "trips/" | relURL }}">All trips →</a></div>
+  <div class="grid">{{ range first 3 .ByDate.Reverse }}{{ partial "trip-card.html" . }}{{ end }}</div>
+</section>
+{{ end }}
+{{ with $plans }}
+<section class="wrap home-row">
+  <div class="row-head"><h2>Dreaming of</h2><a href="{{ "plans/" | relURL }}">All plans →</a></div>
+  <div class="grid">{{ range first 3 .ByTitle }}{{ partial "plan-card.html" . }}{{ end }}</div>
+</section>
+{{ end }}
+{{ end }}

@@ -1,0 +1,80 @@
+# Visual editor settings for Pages CMS (https://app.pagescms.org). Same forms as /admin.
+media:
+  input: static/images
+  output: /images
+  categories: [image]
+
+content:
+  - name: plans
+    label: My plans (by country)
+    type: collection
+    path: content/plans
+    filename: "{primary}.md"
+    exclude: [_index.md]
+    view: { fields: [flag, title], primary: title, sort: [title] }
+    fields:
+      - { name: title, label: Country, type: string, required: true }
+      - { name: flag, label: "Flag emoji (e.g. 🇯🇵)", type: string }
+      - { name: cover, label: "Cover photo (optional)", type: image }
+      - { name: season, label: "Best time to go (optional)", type: string }
+      - name: places
+        label: Places I want to visit
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.emoji} {fields.name} · {fields.category}" } }
+        fields:
+          - { name: name, label: Place name, type: string }
+          - { name: city, label: "City or area (optional)", type: string }
+          - { name: category, label: Type, type: select, options: { values: ["Food", "Adventure", "Nature", "Attraction"] } }
+          - { name: emoji, label: "Emoji (if no photo)", type: string }
+          - { name: image, label: "Photo (optional)", type: image }
+          - { name: why, label: Why I want to go, type: text }
+          - { name: cost, label: "Cost (a number, in your currency)", type: number }
+          - { name: link, label: "Link (optional)", type: string }
+          - { name: done, label: "I did this!", type: boolean }
+      - { name: example, label: "Example (shows an 'Example' badge)", type: boolean }
+      - { name: body, label: My notes, type: rich-text }
+
+  - name: trips
+    label: My trips
+    type: collection
+    path: content/trips
+    filename: "{primary}.md"
+    exclude: [_index.md]
+    view: { fields: [title, country, date], primary: title, sort: [date, title] }
+    fields:
+      - { name: title, label: "Place (e.g. Bali)", type: string, required: true }
+      - { name: country, label: Country, type: string }
+      - { name: flag, label: "Flag emoji (e.g. 🇮🇩)", type: string }
+      - { name: date, label: When I went, type: date }
+      - { name: endDate, label: "Until (optional)", type: date }
+      - { name: emoji, label: "Emoji for this trip", type: string }
+      - { name: cover, label: Cover photo, type: image }
+      - { name: summary, label: One-line memory, type: string }
+      - name: places
+        label: Where I went
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.emoji} {fields.name}" } }
+        fields:
+          - { name: name, label: Place, type: string }
+          - { name: favourite, label: "One of my favourites ★", type: boolean }
+          - { name: emoji, label: "Emoji (if no photo)", type: string }
+          - { name: image, label: Photo, type: image }
+          - { name: note, label: Note, type: text }
+      - name: foods
+        label: My favourite foods
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.emoji} {fields.name}" } }
+        fields:
+          - { name: name, label: Food, type: string }
+          - { name: where, label: "Where I had it (optional)", type: string }
+          - { name: emoji, label: "Emoji (if no photo)", type: string }
+          - { name: image, label: Photo, type: image }
+          - { name: note, label: Note, type: text }
+      - name: photos
+        label: Photos
+        type: object
+        list: { collapsible: { collapsed: true, summary: "{fields.caption}" } }
+        fields:
+          - { name: image, label: Photo, type: image }
+          - { name: caption, label: "Caption (optional)", type: string }
+      - { name: body, label: My story, type: rich-text }

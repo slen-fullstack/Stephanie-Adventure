@@ -1,0 +1,131 @@
+# Your editor at /admin (Sveltia CMS). Sign in with your GitHub token.
+backend:
+  name: github
+  repo: slen-fullstack/stephanie-adventure
+  branch: main
+  auth_methods: [token]
+
+site_url: https://slen-fullstack.github.io/stephanie-adventure/
+display_url: https://slen-fullstack.github.io/stephanie-adventure/
+
+media_folder: static/images
+public_folder: /images
+
+collections:
+  - name: plans
+    label: My plans (by country)
+    label_singular: Country
+    folder: content/plans
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{flag}} {{title}}"
+    sortable_fields: [title]
+    fields:
+      - { name: title, label: Country, widget: string }
+      - { name: flag, label: "Flag emoji (e.g. 🇯🇵)", widget: string, required: false }
+      - { name: cover, label: Cover photo (optional), widget: image, required: false }
+      - { name: season, label: "Best time to go (optional)", widget: string, required: false }
+      - name: places
+        label: Places I want to visit
+        label_singular: Place
+        widget: list
+        summary: "{{emoji}} {{name}} · {{category}}"
+        required: false
+        fields:
+          - { name: name, label: Place name, widget: string }
+          - { name: city, label: "City or area (optional)", widget: string, required: false }
+          - name: category
+            label: Type
+            widget: select
+            options: ["Food", "Adventure", "Nature", "Attraction"]
+          - { name: emoji, label: "Emoji (if no photo)", widget: string, required: false, default: "📍" }
+          - { name: image, label: Photo (optional), widget: image, required: false }
+          - { name: why, label: Why I want to go, widget: text, required: false }
+          - { name: cost, label: "Cost (a number, in your currency)", widget: number, value_type: float, required: false }
+          - { name: link, label: "Link (optional)", widget: string, required: false }
+          - { name: done, label: "I did this!", widget: boolean, required: false, default: false }
+      - { name: example, label: "Example (shows an 'Example' badge)", widget: boolean, required: false, default: false }
+      - { name: body, label: My notes, widget: markdown, required: false }
+
+  - name: trips
+    label: My trips
+    label_singular: Trip
+    folder: content/trips
+    create: true
+    extension: md
+    format: frontmatter
+    slug: "{{slug}}"
+    summary: "{{flag}} {{title}}, {{country}}"
+    sortable_fields: [date, title, country]
+    fields:
+      - { name: title, label: "Place (e.g. Bali)", widget: string }
+      - { name: country, label: Country, widget: string }
+      - { name: flag, label: "Flag emoji (e.g. 🇮🇩)", widget: string, required: false }
+      - { name: date, label: When I went, widget: datetime, time_format: false, required: false }
+      - { name: endDate, label: "Until (optional)", widget: datetime, time_format: false, required: false }
+      - { name: emoji, label: "Emoji for this trip", widget: string, required: false, default: "🌊" }
+      - { name: cover, label: Cover photo, widget: image, required: false }
+      - { name: summary, label: One-line memory, widget: string, required: false }
+      - name: places
+        label: Where I went
+        label_singular: Place
+        widget: list
+        summary: "{{emoji}} {{name}}"
+        required: false
+        fields:
+          - { name: name, label: Place, widget: string }
+          - { name: favourite, label: "One of my favourites ★", widget: boolean, required: false, default: false }
+          - { name: emoji, label: "Emoji (if no photo)", widget: string, required: false, default: "📍" }
+          - { name: image, label: Photo, widget: image, required: false }
+          - { name: note, label: Note, widget: text, required: false }
+      - name: foods
+        label: My favourite foods
+        label_singular: Food
+        widget: list
+        summary: "{{emoji}} {{name}}"
+        required: false
+        fields:
+          - { name: name, label: Food, widget: string }
+          - { name: where, label: "Where I had it (optional)", widget: string, required: false }
+          - { name: emoji, label: "Emoji (if no photo)", widget: string, required: false, default: "🍽️" }
+          - { name: image, label: Photo, widget: image, required: false }
+          - { name: note, label: Note, widget: text, required: false }
+      - name: photos
+        label: Photos
+        label_singular: Photo
+        widget: list
+        summary: "{{caption}}"
+        required: false
+        fields:
+          - { name: image, label: Photo, widget: image }
+          - { name: caption, label: "Caption (optional)", widget: string, required: false }
+      - { name: body, label: My story, widget: markdown, required: false }
+
+  - name: settings
+    label: Map
+    files:
+      - name: visited
+        label: "Places I've been (easier to change on My map)"
+        file: data/visited.json
+        format: json
+        fields:
+          - name: regions
+            label: Provinces and states
+            widget: list
+            summary: "{{name}}, {{country}}"
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: country, label: Country, widget: string }
+              - { name: id, label: Map code, widget: string }
+              - { name: c, label: Country code, widget: string }
+          - name: capitals
+            label: Capitals
+            widget: list
+            summary: "{{name}}, {{country}}"
+            fields:
+              - { name: name, label: Name, widget: string }
+              - { name: country, label: Country, widget: string }
+              - { name: id, label: Map code, widget: string }
+              - { name: c, label: Country code, widget: string }

@@ -1,0 +1,12 @@
+{{ define "main" }}
+<section class="page-head wrap">
+  <p class="hand">Look how far you've come</p>
+  <h1>{{ .Title }}</h1>
+  <p class="lede">{{ .Params.blurb }}</p>
+  <a class="btn" href="{{ "admin/#/collections/trips/new" | relURL }}">＋ Log a trip</a>
+</section>
+<section class="wrap">
+  {{ with .Pages }}<div class="grid">{{ range .ByDate.Reverse }}{{ partial "trip-card.html" . }}{{ end }}</div>
+  {{ else }}<p class="empty">No trips yet. Tap <strong>＋ Log a trip</strong>.</p>{{ end }}
+</section>
+{{ end }}

@@ -1,0 +1,14 @@
+{{ define "main" }}
+{{ $all := slice }}{{ range .Pages }}{{ range .Params.places }}{{ $all = $all | append . }}{{ end }}{{ end }}
+{{ $total := 0 }}{{ range $all }}{{ $total = add $total (float (.cost | default 0)) }}{{ end }}
+<section class="page-head wrap">
+  <p class="hand">Where to next, Stephanie?</p>
+  <h1>{{ .Title }}</h1>
+  <p class="lede">{{ len .Pages }} {{ cond (eq (len .Pages) 1) "country" "countries" }} · {{ len $all }} {{ cond (eq (len $all) 1) "place" "places" }} · about {{ partial "money.html" $total }} all together</p>
+  <a class="btn" href="{{ "admin/#/collections/plans/new" | relURL }}">＋ Add a country</a>
+</section>
+<section class="wrap">
+  {{ with .Pages }}<div class="grid">{{ range .ByTitle }}{{ partial "plan-card.html" . }}{{ end }}</div>
+  {{ else }}<p class="empty">No plans yet. Tap <strong>＋ Add a country</strong> to start dreaming.</p>{{ end }}
+</section>
+{{ end }}

@@ -1,0 +1,2 @@
+{{- /* Usage: partial "img.html" (dict "src" .image "alt" "text") */ -}}
+{{- with .src -}}<img src="{{ strings.TrimPrefix "/" . | relURL }}" alt="{{ $.alt }}" loading="lazy">{{- end -}}

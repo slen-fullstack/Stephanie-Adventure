@@ -1,0 +1,8 @@
+<a class="card trip-card" href="{{ .RelPermalink }}">
+  <div class="card-art">{{ with .Params.cover }}{{ partial "img.html" (dict "src" . "alt" "") }}{{ else }}<span aria-hidden="true">{{ .Params.emoji | default "🌊" }}</span>{{ end }}</div>
+  <div class="card-body">
+    <p class="card-kicker">{{ with .Params.flag }}{{ . }} {{ end }}{{ .Params.country }}{{ if not .Date.IsZero }} · {{ .Date.Format "Jan 2006" }}{{ end }}</p>
+    <h3>{{ .Title }}</h3>
+    {{ with .Params.summary }}<p>{{ . }}</p>{{ end }}
+  </div>
+</a>
