@@ -1,8 +1,11 @@
 {
   "regions": [
-    { "id": "IDN-1232", "name": "Bali", "country": "Indonesia", "c": "IDN" }
+    {
+      "id": "IDN-1232",
+      "name": "Bali",
+      "country": "Indonesia",
+      "c": "IDN"
+    }
   ],
-  "capitals": [
-    { "id": "Denpasar|IDN", "name": "Denpasar", "country": "Indonesia", "c": "IDN" }
-  ]
+  "capitals": []
 }
