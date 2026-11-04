@@ -13,21 +13,17 @@ disableKinds = ["taxonomy", "term"]
 
 [menus]
   [[menus.main]]
-    name = "Home"
+    name = "My map"
     pageRef = "/"
     weight = 10
   [[menus.main]]
-    name = "My map"
-    pageRef = "/map"
-    weight = 20
-  [[menus.main]]
     name = "My plans"
     pageRef = "/plans"
-    weight = 30
+    weight = 20
   [[menus.main]]
     name = "My trips"
     pageRef = "/trips"
-    weight = 40
+    weight = 30
 
 [markup.goldmark.renderer]
   unsafe = true

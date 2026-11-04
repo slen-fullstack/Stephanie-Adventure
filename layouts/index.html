@@ -1,55 +1,57 @@
+{{ define "head" }}<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="">{{ end }}
 {{ define "main" }}
-{{ $v := site.Data.visited }}
-{{ $cs := slice }}{{ range $v.regions }}{{ $cs = $cs | append .c }}{{ end }}{{ range $v.capitals }}{{ $cs = $cs | append .c }}{{ end }}
-{{ $plans := where site.RegularPages "Section" "plans" }}
-{{ $trips := where site.RegularPages "Section" "trips" }}
-<section class="hero">
-  <div class="hero-photo" style="background-image:url('{{ "images/hero-wave.webp" | relURL }}')" aria-hidden="true"></div>
-  {{ partial "ribbon.html" (dict "class" "hero-ribbon") }}
-  <div class="wrap hero-inner">
-    <p class="hand">Welcome back, Stephanie</p>
-    <h1>Your world, one wave at a time</h1>
-    <p class="lede">{{ site.Params.tagline }}</p>
-    <dl class="stats" data-stats>
-      <div><dt>Countries</dt><dd data-stat="countries">{{ len (uniq $cs) }}</dd></div>
-      <div><dt>Provinces &amp; states</dt><dd data-stat="regions">{{ len $v.regions }}</dd></div>
-      <div><dt>Capitals</dt><dd data-stat="capitals">{{ len $v.capitals }}</dd></div>
-      <div><dt>Trips logged</dt><dd>{{ len $trips }}</dd></div>
-    </dl>
+<section class="hello wrap">
+  <p class="hello-sun" aria-hidden="true">🌞</p>
+  <h1>Welcome back, Stephanie!</h1>
+  <p class="lede">Here's everywhere you've been so far.</p>
+  <dl class="stats">
+    <div><dd data-stat="countries">0</dd><dt>countries</dt></div>
+    <div><dd data-stat="regions">0</dd><dt>provinces &amp; states</dt></div>
+    <div><dd data-stat="capitals">0</dd><dt>capitals</dt></div>
+    <div><dd data-stat="percent">0%</dd><dt>of the world</dt></div>
+  </dl>
+</section>
+
+<section class="wrap map-wrap">
+  <div class="map-tools">
+    <label class="search"><span class="sr">Find a place</span><input id="map-search" type="search" placeholder="Find a country, province, state or capital…" autocomplete="off" list="map-search-list"><datalist id="map-search-list"></datalist></label>
+    <div class="legend"><span><i class="sw sw-land"></i> Not yet</span><span><i class="sw sw-gold"></i> Been there</span><span><svg viewBox="0 0 100 100" class="sw-star"><use href="#spark"/></svg> Capital</span></div>
   </div>
+  <div class="save-bar" id="save-bar" hidden>
+    <p><strong>You have changes on this device.</strong> Save them to your site so they show up everywhere.</p>
+    <div><button class="btn" id="save-btn">Save to my site</button> <button class="btn btn-ghost" id="undo-btn">Undo changes</button></div>
+    <p class="save-msg" id="save-msg" role="status"></p>
+  </div>
+  <div class="map-box">
+  <div id="map" class="map" data-regions="{{ "map/regions.json" | relURL }}" data-countries="{{ "map/countries.json" | relURL }}" data-capitals="{{ "map/capitals.json" | relURL }}" data-repo="{{ site.Params.githubRepo }}"><p class="map-loading">Loading your world…</p></div>
+    <div class="place-panel" id="place-panel" hidden>
+      <button class="x" data-close aria-label="Close">×</button>
+      <p class="card-kicker" data-kicker></p>
+      <h2 data-name></h2>
+      <div class="panel-actions"></div>
+    </div>
+  </div>
+  <p class="hint">Tap a place you've been and it turns coral 🧡 Zoom in to see province and state capitals.</p>
+
 </section>
 
-<section class="wrap doors">
-  <a class="door" href="{{ "map/" | relURL }}">
-    <span class="door-emoji" aria-hidden="true">🗺️</span>
-    <h2>My map</h2>
-    <p>Tap the countries, provinces, states and capitals you've been to and watch your world turn gold.</p>
-    <span class="door-go">Open my map →</span>
-  </a>
-  <a class="door" href="{{ "plans/" | relURL }}">
-    <span class="door-emoji" aria-hidden="true">🧭</span>
-    <h2>My plans</h2>
-    <p>{{ len $plans }} {{ cond (eq (len $plans) 1) "country" "countries" }} on your list. Food, adventure, nature and attractions, with costs.</p>
-    <span class="door-go">See my plans →</span>
-  </a>
-  <a class="door" href="{{ "trips/" | relURL }}">
-    <span class="door-emoji" aria-hidden="true">📸</span>
-    <h2>My trips</h2>
-    <p>Where you went, your favourite foods and places, and your photos.</p>
-    <span class="door-go">Open my journal →</span>
-  </a>
+<section class="wrap been-list">
+  <div class="row-head"><h2>Places I've been</h2></div>
+  <div id="been"></div>
 </section>
 
-{{ with $trips }}
-<section class="wrap home-row">
-  <div class="row-head"><h2>Recent trips</h2><a href="{{ "trips/" | relURL }}">All trips →</a></div>
-  <div class="grid">{{ range first 3 .ByDate.Reverse }}{{ partial "trip-card.html" . }}{{ end }}</div>
-</section>
+<dialog class="token-dialog" id="token-dialog">
+  <form method="dialog">
+    <h2>Your GitHub token</h2>
+    <p>Paste the same token you use to sign in at <strong>✎ Edit my site</strong>. It stays only on this device.</p>
+    <input type="password" id="token-input" placeholder="github_pat_…" autocomplete="off" required>
+    <div class="panel-actions"><button class="btn" value="ok">Save</button> <button class="btn btn-ghost" value="cancel" formnovalidate>Cancel</button></div>
+  </form>
+</dialog>
+<script id="visited-data" type="application/json">{{ site.Data.visited | jsonify | safeJS }}</script>
 {{ end }}
-{{ with $plans }}
-<section class="wrap home-row">
-  <div class="row-head"><h2>Dreaming of</h2><a href="{{ "plans/" | relURL }}">All plans →</a></div>
-  <div class="grid">{{ range first 3 .ByTitle }}{{ partial "plan-card.html" . }}{{ end }}</div>
-</section>
-{{ end }}
+{{ define "scripts" }}
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
+<script src="https://unpkg.com/topojson-client@3.1.0/dist/topojson-client.min.js"></script>
+{{ $js := resources.Get "js/map.js" | minify }}<script>{{ $js.Content | safeJS }}</script>
 {{ end }}

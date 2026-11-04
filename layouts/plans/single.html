@@ -8,34 +8,27 @@
   {{ if .Params.example }}<p class="note">✨ This is an example country. Edit it or delete it in <a href="{{ "admin/" | relURL }}">✎ Edit my site</a>.</p>{{ end }}
   <div class="filters" role="group" aria-label="Show">
     <button class="chip is-on" data-filter="all">All</button>
-    {{ range $c := slice "Food" "Adventure" "Nature" "Attraction" }}<button class="chip chip-{{ lower $c }}" data-filter="{{ $c }}">{{ partial "cat-emoji.html" $c }} {{ $c }}</button>{{ end }}
+    {{ range $c := slice "Food" "Adventure" "Nature" "Attraction" }}{{ $n := len (where $places "category" $c) }}<button class="chip chip-{{ lower $c }}" data-filter="{{ $c }}">{{ partial "cat-emoji.html" $c }} {{ $c }}{{ if $n }} · {{ $n }}{{ end }}</button>{{ end }}
   </div>
 </section>
 <section class="wrap plan-groups">
-  {{ range $c := slice "Food" "Adventure" "Nature" "Attraction" }}
-  {{ $list := where $places "category" $c }}
-  {{ if $list }}
-  {{ $sub := 0 }}{{ range $list }}{{ $sub = add $sub (float (.cost | default 0)) }}{{ end }}
-  <div class="plan-group" data-cat="{{ $c }}">
-    <div class="row-head"><h2>{{ partial "cat-emoji.html" $c }} {{ $c }}</h2><span class="sub">{{ partial "money.html" $sub }}</span></div>
-    <div class="grid">
-      {{ range $list }}
-      <article class="card place{{ if .done }} is-done{{ end }}">
-        <div class="card-art">{{ with .image }}{{ partial "img.html" (dict "src" . "alt" "") }}{{ else }}<span aria-hidden="true">{{ .emoji | default "📍" }}</span>{{ end }}</div>
-        <div class="card-body">
-          <p class="card-kicker">{{ with .city }}{{ . }} · {{ end }}{{ partial "money.html" (.cost | default 0) }}</p>
-          <h3>{{ .name }}</h3>
-          {{ with .why }}<p class="why"><span class="hand">Why:</span> {{ . }}</p>{{ end }}
-          {{ with .link }}<a class="more" href="{{ . }}" target="_blank" rel="noopener">More info ↗</a>{{ end }}
-          {{ if .done }}<span class="badge">Done ✓</span>{{ end }}
-        </div>
-      </article>
-      {{ end }}
-    </div>
+  {{ with $places }}
+  <div class="grid">
+    {{ range sort . "category" }}
+    {{ $cat := .category | default "Other" }}
+    <article class="card place{{ if .done }} is-done{{ end }}" data-cat="{{ $cat }}">
+      <div class="card-art">{{ with .image }}{{ partial "img.html" (dict "src" . "alt" "") }}{{ else }}<span aria-hidden="true">{{ .emoji | default "📍" }}</span>{{ end }}</div>
+      <div class="card-body">
+        <p class="card-kicker">{{ partial "cat-emoji.html" $cat }} {{ $cat }} · {{ with .city }}{{ . }} · {{ end }}{{ partial "money.html" (.cost | default 0) }}</p>
+        <h3>{{ .name }}</h3>
+        {{ with .why }}<p class="why"><span class="hand">Why:</span> {{ . }}</p>{{ end }}
+        {{ with .link }}<a class="more" href="{{ . }}" target="_blank" rel="noopener">More info ↗</a>{{ end }}
+        {{ if .done }}<span class="badge">Done ✓</span>{{ end }}
+      </div>
+    </article>
+    {{ end }}
   </div>
-  {{ end }}{{ end }}
-  {{ $other := slice }}{{ range $places }}{{ if not (in (slice "Food" "Adventure" "Nature" "Attraction") .category) }}{{ $other = $other | append . }}{{ end }}{{ end }}
-  {{ with $other }}<div class="plan-group" data-cat="Other"><div class="row-head"><h2>✨ Other</h2></div><div class="grid">{{ range . }}<article class="card place"><div class="card-art"><span aria-hidden="true">{{ .emoji | default "📍" }}</span></div><div class="card-body"><h3>{{ .name }}</h3>{{ with .why }}<p class="why">{{ . }}</p>{{ end }}</div></article>{{ end }}</div></div>{{ end }}
+  {{ end }}
   {{ if not $places }}<p class="empty">No places yet. Add some in <a href="{{ "admin/" | relURL }}">✎ Edit my site</a>.</p>{{ end }}
   {{ with .Content }}<div class="prose notes"><h2>My notes</h2>{{ . }}</div>{{ end }}
 </section>

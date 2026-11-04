@@ -1,8 +1,8 @@
 # Stephanie Adventure ✨🌊
 
-Your personal travel site, built with [Hugo](https://gohugo.io/). Turquoise water, white foam and gold sparkles.
+Your personal travel site, built with [Hugo](https://gohugo.io/). Warm sand, coral, sunshine and seafoam ("Sandy Toes"), with round cute fonts.
 
-- **My map**: tap any country, province, state or capital to mark it as somewhere you've been. It turns gold and the counters update.
+- **My map** (the home page): tap any country, province, state or capital to mark it as somewhere you've been. It turns gold and the counters update.
 - **My plans**: one page per country, with the places you want to see sorted into Food, Adventure, Nature and Attraction. Each place has a photo or emoji, why you want to go, and a cost.
 - **My trips**: a journal for each trip, with where you went, your favourite foods and places, and your photos.
 

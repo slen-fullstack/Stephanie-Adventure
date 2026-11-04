@@ -7,7 +7,7 @@
       var b = e.target.closest('[data-filter]'); if (!b) return;
       var f = b.dataset.filter;
       filters.querySelectorAll('[data-filter]').forEach(function (x) { x.classList.toggle('is-on', x === b); });
-      document.querySelectorAll('.plan-group').forEach(function (g) { g.hidden = f !== 'all' && g.dataset.cat !== f; });
+      document.querySelectorAll('.place[data-cat]').forEach(function (g) { g.hidden = f !== 'all' && g.dataset.cat !== f; });
     });
   }
 

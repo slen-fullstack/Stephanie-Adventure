@@ -8,8 +8,8 @@
 <meta name="robots" content="noindex">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;700&family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Nunito:wght@400;600;700;800&display=swap">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E✨%3C/text%3E%3C/svg%3E">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600&family=Nunito:wght@400;600;700;800&display=swap">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🐚%3C/text%3E%3C/svg%3E">
 {{ block "head" . }}{{ end }}
 {{ $css := resources.Get "css/main.css" | minify }}<style>{{ $css.Content | safeCSS }}</style>
 </head>
@@ -17,18 +17,18 @@
 {{ partial "sprites.html" . }}
 <header class="site-header">
   <div class="wrap header-inner">
-    <a class="logo" href="{{ "/" | relURL }}"><svg class="logo-star" viewBox="0 0 100 100" aria-hidden="true"><use href="#spark"/></svg><span>Stephanie Adventure</span></a>
+    <a class="logo" href="{{ "/" | relURL }}"><span class="logo-icon" aria-hidden="true">🐚</span><span>Stephanie Adventure</span></a>
     <nav class="nav" aria-label="Main">
       {{ $current := . }}
       {{ range site.Menus.main }}<a href="{{ .URL }}"{{ if or ($current.IsMenuCurrent "main" .) ($current.HasMenuCurrent "main" .) }} aria-current="page"{{ end }}>{{ .Name }}</a>{{ end }}
+      <a class="nav-edit" href="{{ "admin/" | relURL }}">✎ Edit</a>
     </nav>
   </div>
 </header>
 <main>{{ block "main" . }}{{ end }}</main>
 <footer class="site-footer">
-  {{ partial "ribbon.html" (dict "class" "footer-ribbon") }}
   <div class="wrap footer-inner">
-    <p>Your little world, Stephanie · © {{ now.Year }} · <a class="edit-link" href="{{ "admin/" | relURL }}">✎ Edit my site</a></p>
+    <p>🐚 Your little world, Stephanie · © {{ now.Year }} · <a class="edit-link" href="{{ "admin/" | relURL }}">✎ Edit my site</a></p>
   </div>
 </footer>
 {{ $js := resources.Get "js/main.js" | minify }}<script>{{ $js.Content | safeJS }}</script>

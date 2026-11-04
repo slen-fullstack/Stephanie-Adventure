@@ -53,7 +53,7 @@
   }
 
   function starIcon(on, big) {
-    var s = big ? 26 : 15;
+    var s = on ? (big ? 24 : 16) : (big ? 15 : 10);
     return L.divIcon({
       className: 'cap-star' + (on ? ' is-been' : '') + (big ? ' is-national' : ''),
       html: '<svg viewBox="0 0 100 100"><use href="#spark"/></svg>', iconSize: [s, s], iconAnchor: [s / 2, s / 2]
